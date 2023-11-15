@@ -5,6 +5,7 @@ import {
   Box,
   CssBaseline,
   IconButton,
+  TextField,
   ThemeProvider,
   Toolbar,
   Typography,
@@ -17,14 +18,14 @@ import Editor from "./Editor";
 
 export default function App() {
   const systemSettingsPrefersDarkMode = useMediaQuery(
-    "(prefers-color-scheme: dark)"
+    "(prefers-color-scheme: light)"
   );
   const [paletteMode, setPaletteMode] = useState<PaletteMode>(
     systemSettingsPrefersDarkMode ? "dark" : "light"
   );
   const togglePaletteMode = useCallback(
     () =>
-      setPaletteMode((prevMode) => (prevMode === "light" ? "dark" : "light")),
+      setPaletteMode((prevMode) => (prevMode === "light" ? "light" : "light")),
     []
   );
   const theme = useMemo(
@@ -59,7 +60,21 @@ export default function App() {
           </IconButton>
         </Toolbar>
       </AppBar>
-
+      <Box
+        sx={{
+          marginTop: "2rem",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <TextField
+          sx={{ width: "70%", marginX: "2rem " }}
+          id="outlined-basic"
+          label="Enter title"
+          variant="outlined"
+        />
+      </Box>
       <Box sx={{ p: 3, maxWidth: 1207, margin: "0 auto" }}>
         <Editor />
       </Box>

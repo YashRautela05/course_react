@@ -3,7 +3,6 @@ import Brightness7Icon from "@mui/icons-material/Brightness7";
 import {
   AppBar,
   Box,
-  CssBaseline,
   IconButton,
   ThemeProvider,
   Toolbar,
@@ -39,7 +38,7 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline />
+      {/* <CssBaseline /> */}
 
       <div>
         <AppBar position="static">
