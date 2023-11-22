@@ -55,7 +55,7 @@ function Home() {
 
             <Grid item>
               <IconButton sx={{}}>
-                {true ? <img src={MoonSvg} /> : <img src={MoonSvg} />}
+                <img src={MoonSvg} />
               </IconButton>
             </Grid>
 

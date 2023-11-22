@@ -19,8 +19,7 @@ const fabStyle = {
 };
 export default function ClippedDrawer() {
   return (
-    <>
-      <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex" }}>
         <CssBaseline />
         <AppBar
           elevation={0}
@@ -117,6 +116,5 @@ export default function ClippedDrawer() {
           </Fab>
         </Box>
       </Box>
-    </>
   );
 }

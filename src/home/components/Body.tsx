@@ -3,8 +3,7 @@ import Card from "./Card";
 
 export default function Body() {
   return (
-    <>
-      <Box
+    <Box
         sx={{
           display: "flex",
           justifyContent: "center",
@@ -31,6 +30,5 @@ export default function Body() {
           <Card></Card>
         </Box>
       </Box>
-    </>
   );
 }

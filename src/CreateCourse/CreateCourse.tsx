@@ -6,8 +6,20 @@ import Fab from "@mui/material/Fab";
 import TextField from "@mui/material/TextField";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import { Link } from "react-router-dom";
-let CreateCourse = () => {
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { CourseState, setCourseData } from "../state/courseSlice/courseSlice";
+import { AppDispatch, RootState } from "../state/store";
+function CreateCourse() {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const course = useSelector((state: RootState) => state.course);
+
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    console.log(course);
+  }, [course]);
   return (
     <>
       <CssBaseline> </CssBaseline>
@@ -41,6 +53,11 @@ let CreateCourse = () => {
             sx={{ width: "60%", marginY: "2rem" }}
             id="outlined-basic"
             label="Enter Course title"
+            value={title}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              console.log(event.target.value);
+              setTitle(event.target.value);
+            }}
             variant="outlined"
           ></TextField>
           <TextField
@@ -48,6 +65,12 @@ let CreateCourse = () => {
             multiline
             sx={{ width: "60%" }}
             id="outlined-basic"
+            value={description}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              console.log(event.target.value);
+
+              setDescription(event.target.value);
+            }}
             rows={20}
             label="Enter Description"
             variant="outlined"
@@ -56,16 +79,21 @@ let CreateCourse = () => {
             style={{ bottom: 20, right: 20, position: "fixed" }}
             color="primary"
             aria-label="add"
+            onClick={() => {
+              let data: CourseState = {
+                courseTitle: title,
+                courseDescription: description,
+              };
+              dispatch(setCourseData(data));
+            }}
           >
-            <Link to={"/editor"}>
-              {" "}
-              <ArrowForward></ArrowForward>
-            </Link>
+            {/* <Link to={"/editor"}> */} <ArrowForward></ArrowForward>
+            {/* </Link> */}
           </Fab>
         </Box>
       </Box>
     </>
   );
-};
+}
 
 export default CreateCourse;
