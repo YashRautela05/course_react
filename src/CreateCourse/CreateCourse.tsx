@@ -8,7 +8,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { CourseState, setCourseData } from "../state/courseSlice/courseSlice";
+import { CourseState, postCourse } from "../state/courseSlice/courseSlice";
 import { AppDispatch, RootState } from "../state/store";
 function CreateCourse() {
   const [title, setTitle] = useState("");
@@ -84,7 +84,9 @@ function CreateCourse() {
                 courseTitle: title,
                 courseDescription: description,
               };
-              dispatch(setCourseData(data));
+
+              dispatch(postCourse(data) as any);
+              console.log("Hitting");
             }}
           >
             {/* <Link to={"/editor"}> */} <ArrowForward></ArrowForward>

@@ -3,7 +3,8 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { Avatar, Box, IconButton } from "@mui/material";
 import BookMarkSvg from "../../assets/svg/bookmark.svg";
 import DiscussSvg from "../../assets/svg/discuss.svg";
-export default function Card() {
+import { CourseGetState } from "../../state/api/courseApiSlice";
+export default function Card(props: CourseGetState) {
   return (
     <>
       <CssBaseline />
@@ -65,7 +66,8 @@ export default function Card() {
                 color: "rgb(100 116 139/1)",
               }}
             >
-              adisalu15@gmail.com
+              {/* adisalu15@gmail.com */}
+              {props.email}
             </Box>
           </Box>
           <Box fontWeight={400} alignSelf={"end"}>
@@ -79,12 +81,14 @@ export default function Card() {
             justifySelf={"center"}
             color="rgb(100 116 139/1)"
           >
-            Nov 8, 2023
+            {/* Nov 8, 2023 */}
+            {props.createdAt}
           </Box>
         </Box>
         <Box display={"flex"} flexDirection={"column"} gap={"0.3rem"}>
           <Box fontWeight={"bold"} fontSize={"1.25rem"}>
-            Stop using boolean states
+            {/* Stop using boolean states */}
+            {props.courseTitle}
           </Box>
           <Box
             overflow={"hidden"}
@@ -101,10 +105,11 @@ export default function Card() {
               cursor: "pointer",
             }}
           >
-            Hello peeps 👋, It's been a while on this platform. The story of my
+            {/* Hello peeps 👋, It's been a while on this platform. The story of my
             life 🫠 Anyway, I am back again to bring us something exciting I have
             been learning about mobile app development. Earlier this year, I
-            took an interest in learning mobile, which was ...
+            took an interest in learning mobile, which was ... */}
+            {props.description}
           </Box>
         </Box>
         <Box display={"flex"} justifyContent={"space-between"}>

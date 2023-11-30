@@ -1,15 +1,28 @@
 import { AppBar, Button, IconButton, Toolbar, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import BellSvg from "../assets/svg/bell.svg";
 import MoonSvg from "../assets/svg/moon.svg";
 import { default as SearchSvg } from "../assets/svg/search.svg";
+import { AppDispatch } from "../state/store";
 import Body from "./components/Body";
+
+import { useGetCoursesQuery } from "../state/api/courseApiSlice";
 function Home() {
+  const dispatch = useDispatch<AppDispatch>();
+
+  const {
+    data: getCourses,
+    isLoading,
+    isSuccess,
+    isError,
+    error,
+  } = useGetCoursesQuery("TEST");
   return (
     <>
       {/* <CssBaseline /> */}
-
+      {console.log(getCourses)}
       <AppBar
         position="static"
         elevation={0}

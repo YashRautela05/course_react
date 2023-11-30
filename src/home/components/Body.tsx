@@ -1,9 +1,21 @@
 import Box from "@mui/material/Box";
+import {
+  CourseGetState,
+  useGetCoursesQuery,
+} from "../../state/api/courseApiSlice";
 import Card from "./Card";
 
 export default function Body() {
+  const {
+    data: getCourses,
+    isLoading,
+    isSuccess,
+    isError,
+    error,
+  } = useGetCoursesQuery("TEST");
   return (
-    <Box
+    <>
+      <Box
         sx={{
           display: "flex",
           justifyContent: "center",
@@ -22,13 +34,32 @@ export default function Body() {
           maxWidth={"728px"}
           justifyContent={"center"}
         >
-          <Card></Card>
-          <Card></Card>
-
-          <Card></Card>
-
-          <Card></Card>
+          {isLoading ? (
+            <center>
+              {" "}
+              <p>Loading</p>
+            </center>
+          ) : (
+            <></>
+          )}
+          {isSuccess ? (
+            getCourses.content.map((course: CourseGetState, index: number) => {
+              console.log(index, course);
+              return (
+                <Card
+                  id={`${course.id}`}
+                  courseTitle={`${course.courseTitle}`}
+                  description={`${course.description}`}
+                  email={`${course.email}`}
+                  createdAt={`${course.createdAt}`}
+                ></Card>
+              );
+            })
+          ) : (
+            <div></div>
+          )}
         </Box>
       </Box>
+    </>
   );
 }
