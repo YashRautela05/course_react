@@ -6,10 +6,10 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import CreateCourse from "../CreateCourse/CreateCourse";
-import MyCourses from "../MyCourses/MyCourses";
-import Home from "../home/Home";
 import { store } from "../state/store";
+import CreateCourse from "../view/CreateCourse/CreateCourse";
+import MyCourses from "../view/MyCourses/MyCourses";
+import Home from "../view/home/Home";
 import App from "./App";
 
 // import "./index.css";

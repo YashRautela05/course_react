@@ -67,22 +67,8 @@ export default function Card(props: CourseGetState) {
               }}
             >
               {/* adisalu15@gmail.com */}
-              {props.email}
+              {`${props.email} |     ${props.createdAt}`}
             </Box>
-          </Box>
-          <Box fontWeight={400} alignSelf={"end"}>
-            .
-          </Box>
-          <Box
-            marginX={"0.2rem"}
-            fontSize={"14px"}
-            fontWeight={"regular"}
-            alignSelf={"end"}
-            justifySelf={"center"}
-            color="rgb(100 116 139/1)"
-          >
-            {/* Nov 8, 2023 */}
-            {props.createdAt}
           </Box>
         </Box>
         <Box display={"flex"} flexDirection={"column"} gap={"0.3rem"}>

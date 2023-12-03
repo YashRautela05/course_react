@@ -37,7 +37,7 @@ export const postCourse = createAsyncThunk(
       data: {
         courseTitle: data.courseTitle,
         description: data.courseDescription,
-        email: "rajsalu15@gmail.com",
+        email: "adisalu15@gmail.com",
       },
     });
     console.log(response.data);

@@ -4,6 +4,7 @@ import TextFields from "@mui/icons-material/TextFields";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import type { EditorOptions } from "@tiptap/core";
 import { useCallback, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   LinkBubbleMenu,
   MenuButton,
@@ -13,6 +14,12 @@ import {
   insertImages,
   type RichTextEditorRef,
 } from "../";
+import {
+  TopicPostState,
+  usePostTopicsByCourseIdMutation,
+} from "../state/api/fetchTopicsByCourseIdSlice";
+import { setTopicBlog } from "../state/courseSlice/setTopicDetailsSlice";
+import { AppDispatch, RootState } from "../state/store";
 import EditorMenuControls from "./EditorMenuControls";
 import useExtensions from "./useExtensions";
 
@@ -30,6 +37,11 @@ function fileListToImageFiles(fileList: FileList): File[] {
 }
 
 export default function Editor() {
+  let topicData = useSelector((state: RootState) => state.setTopicDetails);
+  let courseId = useSelector((state: RootState) => state.topicsByCourseID);
+  const [postTopic, response] = usePostTopicsByCourseIdMutation();
+  const dispatch = useDispatch<AppDispatch>();
+
   const extensions = useExtensions({
     placeholder: "Add your own content here...",
   });
@@ -201,9 +213,24 @@ export default function Editor() {
                   variant="contained"
                   size="small"
                   onClick={() => {
+                    dispatch(
+                      setTopicBlog(rteRef.current?.editor?.getHTML() ?? "")
+                    );
+
                     setSubmittedContent(
                       rteRef.current?.editor?.getHTML() ?? ""
                     );
+
+                    let currentTopic: TopicPostState = {
+                      courseId: courseId,
+                      title: topicData.topicName,
+                      blog: topicData.topicBlog,
+                      email: "adisalu15@gmail.com",
+                    };
+
+                    console.log(currentTopic);
+
+                    postTopic(currentTopic);
                   }}
                 >
                   Save

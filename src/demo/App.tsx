@@ -14,9 +14,14 @@ import {
   type PaletteMode,
 } from "@mui/material";
 import { useCallback, useMemo, useState } from "react";
+import { useDispatch } from "react-redux";
+import { setTopicTitle } from "../state/courseSlice/setTopicDetailsSlice";
+import { AppDispatch } from "../state/store";
 import Editor from "./Editor";
 
 export default function App() {
+  const dispatch = useDispatch<AppDispatch>();
+
   const systemSettingsPrefersDarkMode = useMediaQuery(
     "(prefers-color-scheme: light)"
   );
@@ -73,6 +78,9 @@ export default function App() {
           id="outlined-basic"
           label="Enter title"
           variant="outlined"
+          onChange={(event) => {
+            dispatch(setTopicTitle(event?.target.value));
+          }}
         />
       </Box>
       <Box sx={{ p: 3, maxWidth: 1207, margin: "0 auto" }}>
