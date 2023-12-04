@@ -7,11 +7,11 @@ import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { store } from "../state/store";
+import Blog from "../view/Blog/Blog";
 import CreateCourse from "../view/CreateCourse/CreateCourse";
 import MyCourses from "../view/MyCourses/MyCourses";
 import Home from "../view/home/Home";
 import App from "./App";
-
 // import "./index.css";
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -24,6 +24,7 @@ createRoot(container).render(
           <Route path="/" element={<Home></Home>}></Route>
           <Route path="/editor" element={<App></App>}></Route>
           <Route path="/my-courses" element={<MyCourses></MyCourses>}></Route>
+          <Route path="/blog" element={<Blog></Blog>}></Route>
           <Route
             path="/create-course"
             element={<CreateCourse></CreateCourse>}
