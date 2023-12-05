@@ -1,15 +1,15 @@
 import Lock from "@mui/icons-material/Lock";
 import LockOpen from "@mui/icons-material/LockOpen";
 import TextFields from "@mui/icons-material/TextFields";
-import { Box, Button, Stack, Typography } from "@mui/material";
+import { Box, Button, Stack } from "@mui/material";
 import type { EditorOptions } from "@tiptap/core";
 import { useCallback, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import {
   LinkBubbleMenu,
   MenuButton,
   RichTextEditor,
-  RichTextReadOnly,
   TableBubbleMenu,
   insertImages,
   type RichTextEditorRef,
@@ -133,7 +133,7 @@ export default function Editor() {
     );
 
   const [submittedContent, setSubmittedContent] = useState("");
-
+  const navigate = useNavigate();
   return (
     <>
       <Box
@@ -224,13 +224,14 @@ export default function Editor() {
                     let currentTopic: TopicPostState = {
                       courseId: courseId,
                       title: topicData.topicName,
-                      blog: topicData.topicBlog,
+                      blog: rteRef.current?.editor?.getHTML() ?? "",
                       email: "adisalu15@gmail.com",
                     };
 
                     console.log(currentTopic);
 
                     postTopic(currentTopic);
+                    navigate(-1);
                   }}
                 >
                   Save
@@ -248,11 +249,11 @@ export default function Editor() {
         </RichTextEditor>
       </Box>
 
-      <Typography variant="h5" sx={{ mt: 5 }}>
+      {/* <Typography variant="h5" sx={{ mt: 5 }}>
         Saved result:
-      </Typography>
+      </Typography> */}
 
-      {submittedContent ? (
+      {/* {submittedContent ? (
         <>
           <pre style={{ marginTop: 10, overflow: "auto", maxWidth: "100%" }}>
             <code>{submittedContent}</code>
@@ -275,7 +276,7 @@ export default function Editor() {
           Typically you’d use a similar <code>editor.getHTML()</code> approach
           to save your data in a form.
         </>
-      )}
+      )} */}
     </>
   );
 }

@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const BASE_URL: string = "http://localhost:8080/api/v1/course";
 
 const getAuthToken = () => {
-  return "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZGlzYWx1MTVAZ21haWwuY29tIiwiaWF0IjoxNzAxNjQ3NDE5LCJleHAiOjE3MDE2NDg4NTl9.xQgrrRQ0t88fiP8QfHpP7wmNvq-bcd7-qR3F4ILbd4E";
+  return "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZGlzYWx1MTVAZ21haWwuY29tIiwiaWF0IjoxNzAxNzI3ODY3LCJleHAiOjE3MDE3MjkzMDd9.4SETF_fuRQ02ivfk3VBl0FQokIptXD2Z_ssr82VCbN4";
 };
 export const userCourseApiSlice = createApi({
   reducerPath: "api2",

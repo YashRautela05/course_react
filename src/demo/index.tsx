@@ -24,7 +24,7 @@ createRoot(container).render(
           <Route path="/" element={<Home></Home>}></Route>
           <Route path="/editor" element={<App></App>}></Route>
           <Route path="/my-courses" element={<MyCourses></MyCourses>}></Route>
-          <Route path="/blog" element={<Blog></Blog>}></Route>
+          <Route path="/blog/:courseId" element={<Blog></Blog>}></Route>
           <Route
             path="/create-course"
             element={<CreateCourse></CreateCourse>}
