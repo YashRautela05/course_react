@@ -1,4 +1,5 @@
 import { useTheme } from "@mui/material";
+import { v4 as uuid } from "uuid";
 import {
   MenuButtonAddTable,
   MenuButtonBlockquote,
@@ -31,9 +32,12 @@ import {
   MenuSelectTextAlign,
   isTouchDevice,
 } from "../";
+import { useUploadImagesMutation } from "../state/api/uploadFileApiSlice";
 
 export default function EditorMenuControls() {
   const theme = useTheme();
+  const [uploadImages, {}] = useUploadImagesMutation();
+
   return (
     <MenuControlsContainer>
       <MenuSelectFontFamily
@@ -138,19 +142,27 @@ export default function EditorMenuControls() {
       <MenuDivider />
 
       <MenuButtonImageUpload
-        onUploadFiles={(files) =>
-          // For the sake of a demo, we don't have a server to upload the files
-          // to, so we'll instead convert each one to a local "temporary" object
-          // URL. This will not persist properly in a production setting. You
-          // should instead upload the image files to your server, or perhaps
-          // convert the images to bas64 if you would like to encode the image
-          // data directly into the editor content, though that can make the
-          // editor content very large.
-          files.map((file) => ({
-            src: URL.createObjectURL(file),
-            alt: file.name,
-          }))
-        }
+        onUploadFiles={async (files) => {
+          const uploadPromises = files.map(async (file) => {
+            const unique_id = uuid();
+            const modifiedFile = new File([file], unique_id, {
+              type: file.type,
+            });
+
+            // Assuming uploadImages returns a Promise
+            await uploadImages(modifiedFile).unwrap();
+
+            return {
+              src: `http://localhost:8080/api/v1/files/images/get/${unique_id}`,
+              alt: file.name,
+            };
+          });
+
+          // Wait for all upload promises to resolve
+          const result = await Promise.all(uploadPromises);
+
+          return result;
+        }}
       />
 
       <MenuDivider />

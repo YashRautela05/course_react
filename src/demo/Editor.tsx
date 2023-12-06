@@ -6,6 +6,7 @@ import type { EditorOptions } from "@tiptap/core";
 import { useCallback, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { v4 as uuid } from "uuid";
 import {
   LinkBubbleMenu,
   MenuButton,
@@ -18,11 +19,12 @@ import {
   TopicPostState,
   usePostTopicsByCourseIdMutation,
 } from "../state/api/fetchTopicsByCourseIdSlice";
+import { useUploadImagesMutation } from "../state/api/uploadFileApiSlice";
+import { userAuthType } from "../state/authUserDetailsSlice/authUserDetailsSlice";
 import { setTopicBlog } from "../state/courseSlice/setTopicDetailsSlice";
 import { AppDispatch, RootState } from "../state/store";
 import EditorMenuControls from "./EditorMenuControls";
 import useExtensions from "./useExtensions";
-
 const exampleContent =
   '<h2 style="text-align: center">Hey there 👋</h2><p>This is a <em>basic</em> example of <code>mui-tiptap</code>, which combines <a target="_blank" rel="noopener noreferrer nofollow" href="https://tiptap.dev/">Tiptap</a> with customizable <a target="_blank" rel="noopener noreferrer nofollow" href="https://mui.com/">MUI (Material-UI)</a> styles, plus a suite of additional components and extensions! Sure, there are <strong>all <em>kinds</em> of <s>text</s> <u>formatting</u> options</strong> you’d probably expect from a rich text editor. But wait until you see the <span data-type="mention" data-id="15" data-label="Axl Rose">@Axl Rose</span> mentions and lists:</p><ul><li><p>That’s a bullet list with one …</p></li><li><p>… or two list items.</p></li></ul><p>Isn’t that great? And all of that is editable. <strong><span style="color: #ff9900">But wait, </span><span style="color: #403101"><mark data-color="#ffd699" style="background-color: #ffd699; color: inherit">there’s more!</mark></span></strong> Let’s try a code block:</p><pre><code class="language-css">body {\n  display: none;\n}</code></pre><p></p><p>That’s only the tip of the iceberg. Feel free to add and resize images:</p><img height="auto" src="http://placekitten.com/600/400" alt="kitten" width="350" style="aspect-ratio: 3 / 2"><p></p><p>Organize information in tables:</p><table><tbody><tr><th colspan="1" rowspan="1"><p>Name</p></th><th colspan="1" rowspan="1"><p>Role</p></th><th colspan="1" rowspan="1"><p>Team</p></th></tr><tr><td colspan="1" rowspan="1"><p>Alice</p></td><td colspan="1" rowspan="1"><p>PM</p></td><td colspan="1" rowspan="1"><p>Internal tools</p></td></tr><tr><td colspan="1" rowspan="1"><p>Bob</p></td><td colspan="1" rowspan="1"><p>Software</p></td><td colspan="1" rowspan="1"><p>Infrastructure</p></td></tr></tbody></table><p></p><p>Or write down your groceries:</p><ul data-type="taskList"><li data-checked="true" data-type="taskItem"><label><input type="checkbox" checked="checked"><span></span></label><div><p>Milk</p></div></li><li data-checked="false" data-type="taskItem"><label><input type="checkbox"><span></span></label><div><p>Eggs</p></div></li><li data-checked="false" data-type="taskItem"><label><input type="checkbox"><span></span></label><div><p>Sriracha</p></div></li></ul><blockquote><p>Wow, that’s amazing. Good work! 👏 <br>— Mom</p></blockquote><p>Give it a try and click around!</p>';
 
@@ -37,11 +39,11 @@ function fileListToImageFiles(fileList: FileList): File[] {
 }
 
 export default function Editor() {
+  const [uploadImages, {}] = useUploadImagesMutation();
   let topicData = useSelector((state: RootState) => state.setTopicDetails);
   let courseId = useSelector((state: RootState) => state.topicsByCourseID);
   const [postTopic, response] = usePostTopicsByCourseIdMutation();
   const dispatch = useDispatch<AppDispatch>();
-
   const extensions = useExtensions({
     placeholder: "Add your own content here...",
   });
@@ -50,9 +52,9 @@ export default function Editor() {
   const [showMenuBar, setShowMenuBar] = useState(true);
 
   const handleNewImageFiles = useCallback(
-    (files: File[], insertPosition?: number): void => {
+    async (files: File[], insertPosition?: number): Promise<void> => {
       if (!rteRef.current?.editor) {
-        return;
+        return Promise.resolve();
       }
 
       // For the sake of a demo, we don't have a server to upload the files to,
@@ -63,10 +65,23 @@ export default function Editor() {
       // into the editor content, though that can make the editor content very
       // large. You will probably want to use the same upload function here as
       // for the MenuButtonImageUpload `onUploadFiles` prop.
-      const attributesForImageFiles = files.map((file) => ({
-        src: URL.createObjectURL(file),
-        alt: file.name,
-      }));
+
+      const attributesForImageFiles = await Promise.all(
+        files.map(async (file) => {
+          const unique_id = uuid();
+          const modifiedFile = new File([file], unique_id, { type: file.type });
+
+          // Get first 8 characters using slice
+          await uploadImages(modifiedFile)
+            .unwrap()
+            .then((fullfilled) => console.log("filled"));
+
+          return {
+            src: `http://localhost:8080/api/v1/files/images/get/${unique_id}`,
+            alt: file.name,
+          };
+        })
+      );
 
       insertImages({
         images: attributesForImageFiles,
@@ -91,7 +106,7 @@ export default function Editor() {
             left: event.clientX,
             top: event.clientY,
           })?.pos;
-
+          console.log(imageFiles);
           handleNewImageFiles(imageFiles, insertPosition);
 
           // Return true to treat the event as handled. We call preventDefault
@@ -221,11 +236,14 @@ export default function Editor() {
                       rteRef.current?.editor?.getHTML() ?? ""
                     );
 
+                    let authUserDetails = JSON.parse(
+                      localStorage.getItem("authDetails") ?? "[]"
+                    ) as userAuthType;
                     let currentTopic: TopicPostState = {
                       courseId: courseId,
                       title: topicData.topicName,
                       blog: rteRef.current?.editor?.getHTML() ?? "",
-                      email: "adisalu15@gmail.com",
+                      email: authUserDetails.email,
                     };
 
                     console.log(currentTopic);
