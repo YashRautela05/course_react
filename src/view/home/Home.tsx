@@ -1,17 +1,25 @@
 import { AppBar, Button, IconButton, Toolbar, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import BellSvg from "../../assets/svg/bell.svg";
 import MoonSvg from "../../assets/svg/moon.svg";
 import { default as SearchSvg } from "../../assets/svg/search.svg";
 import { AppDispatch } from "../../state/store";
 import Body from "./components/Body";
 
+import { useEffect } from "react";
 import { useGetCoursesQuery } from "../../state/api/courseApiSlice";
 function Home() {
-  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    if (localStorage.getItem("authDetails") === null) {
+      navigate("/sign-in");
+    }
+  });
+
+  const dispatch = useDispatch<AppDispatch>();
   const {
     data: getCourses,
     isLoading,
@@ -60,9 +68,13 @@ function Home() {
               <Button
                 disableElevation
                 variant="contained"
-                sx={{ textTransform: "none", borderRadius: "1rem" }}
+                disableRipple
+                sx={{ textTransform: "none", borderRadius: "0.3rem" }}
+                onClick={() => {
+                  navigate("/my-courses");
+                }}
               >
-                <Link to={"/my-courses"}> My Courses</Link>
+                My Courses
               </Button>
             </Grid>
 

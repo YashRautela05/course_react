@@ -4,6 +4,7 @@ import {
   createSlice,
 } from "@reduxjs/toolkit/";
 import axios from "axios";
+import { userAuthType } from "../authUserDetailsSlice/authUserDetailsSlice";
 
 export interface CourseState {
   courseTitle: string;
@@ -29,6 +30,9 @@ export const fetchCourse = createAsyncThunk("course/getCourse", async () => {
 export const postCourse = createAsyncThunk(
   "course/postCourse",
   async (data: CourseState) => {
+    let userAuthDetails = JSON.parse(
+      localStorage.getItem("authDetails") ?? "[]"
+    ) as userAuthType;
     const response = await axios({
       method: "post",
       baseURL: BASE_URL,
@@ -37,7 +41,7 @@ export const postCourse = createAsyncThunk(
       data: {
         courseTitle: data.courseTitle,
         description: data.courseDescription,
-        email: "adisalu15@gmail.com",
+        email: userAuthDetails.email,
       },
     });
     console.log(response.data);

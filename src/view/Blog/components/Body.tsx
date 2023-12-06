@@ -5,7 +5,7 @@ import {
   ListItemText,
   ListSubheader,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import RichTextReadOnly from "../../../RichTextReadOnly";
 import useExtensions from "../../../demo/useExtensions";
@@ -23,7 +23,13 @@ export default function Body() {
   } = useFetchTopicByCourseIdQuery(courseId ?? "");
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [blogData, setBlogData] = useState("");
-
+  useEffect(() => {
+    // Check if topics is available and not empty
+    if (isSuccess && topics.length > 0) {
+      setSelectedIndex(0); // Set the selected index to the first element
+      setBlogData(topics[0].blog); // Set the initial blog data
+    }
+  }, [isSuccess, topics]);
   return (
     <>
       <Box

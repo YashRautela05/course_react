@@ -47,6 +47,7 @@ export default function Body() {
               console.log(index, course);
               return (
                 <Card
+                  key={course.id}
                   id={`${course.id}`}
                   courseTitle={`${course.courseTitle}`}
                   description={`${course.description}`}

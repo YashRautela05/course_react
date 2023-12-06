@@ -10,7 +10,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { CourseGetState } from "../../state/api/courseApiSlice";
 import { useGetUserCoursesQuery } from "../../state/api/fetchUserCoursesSlice";
 import { setUserSelectedCourse } from "../../state/courseSlice/setUserCourseSlice";
@@ -25,7 +25,7 @@ export default function ClippedDrawer() {
   const [isCourseClicked, setCourseClicked] = useState(false);
 
   const dispatch = useDispatch<AppDispatch>();
-
+  const navigate = useNavigate();
   const {
     data: userCourses,
     isLoading,
@@ -57,11 +57,13 @@ export default function ClippedDrawer() {
           </Typography>
 
           <Button
+            disableRipple
             disableElevation
-            sx={{ borderRadius: "2rem", textTransform: "none" }}
+            sx={{ borderRadius: "0.3rem", textTransform: "none" }}
             variant={"contained"}
+            onClick={() => navigate("/create-course")}
           >
-            <Link to={"/create-course"}> Create Course</Link>
+            Create Course
           </Button>
         </Toolbar>
       </AppBar>

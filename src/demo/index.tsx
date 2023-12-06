@@ -10,6 +10,8 @@ import { store } from "../state/store";
 import Blog from "../view/Blog/Blog";
 import CreateCourse from "../view/CreateCourse/CreateCourse";
 import MyCourses from "../view/MyCourses/MyCourses";
+import SignIn from "../view/SignIn/SignIn";
+import SignUp from "../view/SignUp/SignUp";
 import Home from "../view/home/Home";
 import App from "./App";
 // import "./index.css";
@@ -25,6 +27,8 @@ createRoot(container).render(
           <Route path="/editor" element={<App></App>}></Route>
           <Route path="/my-courses" element={<MyCourses></MyCourses>}></Route>
           <Route path="/blog/:courseId" element={<Blog></Blog>}></Route>
+          <Route path="/sign-in" element={<SignIn></SignIn>}></Route>
+          <Route path="/sign-up" element={<SignUp></SignUp>}></Route>
           <Route
             path="/create-course"
             element={<CreateCourse></CreateCourse>}

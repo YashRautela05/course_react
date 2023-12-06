@@ -50,7 +50,7 @@ export default function Header() {
               <Button
                 disableElevation
                 variant="contained"
-                sx={{ textTransform: "none", borderRadius: "1rem" }}
+                sx={{ textTransform: "none", borderRadius: "0.3rem" }}
               >
                 Follow
               </Button>
