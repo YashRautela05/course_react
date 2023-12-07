@@ -17,7 +17,22 @@ export const uploadFileSlice = createApi({
         };
       },
     }),
+
+    uploadPdf: builder.mutation({
+      query: (file: File) => {
+        let bodyFormData = new FormData();
+        bodyFormData.append("file", file);
+        return {
+          url: "/pdf/post",
+          method: "POST",
+
+          body: bodyFormData,
+          formData: true,
+        };
+      },
+    }),
   }),
 });
 
-export const { useUploadImagesMutation } = uploadFileSlice;
+export const { useUploadImagesMutation, useUploadPdfMutation } =
+  uploadFileSlice;

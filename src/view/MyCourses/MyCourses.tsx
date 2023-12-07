@@ -124,9 +124,13 @@ export default function ClippedDrawer() {
             width={"100%"}
             display={"flex"}
             alignItems={"center"}
-            justifyItems={"center"}
+            justifyContent={"center"}
           >
-            <Typography>HI</Typography>
+            <Box width={"15rem"}>
+              <Typography textAlign={"center"} component={"div"} variant="h6">
+                Your Topics Will be displayed here
+              </Typography>
+            </Box>
           </Box>
         )}
       </Box>
