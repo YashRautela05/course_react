@@ -12,9 +12,11 @@ export type DocNodeAttributes = {
 export default function insertDocs({
   url,
   editor,
+  name,
 }: {
   url: string;
   editor: Editor;
+  name: string;
 }): void {
   if (!editor || editor.isDestroyed) {
     return;
@@ -24,7 +26,6 @@ export default function insertDocs({
   editor
     .chain()
     .focus()
-    .extendMarkRange("link")
-    .setLink({ href: url, target: "_blank" })
+    .insertContent(`<a href="${url}" target="_blank">${name}</a>`)
     .run();
 }

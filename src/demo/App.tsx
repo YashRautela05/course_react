@@ -13,11 +13,11 @@ import {
 import { useCallback, useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setTopicTitle } from "../state/courseSlice/setTopicDetailsSlice";
-import { AppDispatch } from "../state/store";
+import type { AppDispatch } from "../state/store";
 import Editor from "./Editor";
 
 export default function App() {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch();
 
   const systemSettingsPrefersDarkMode = useMediaQuery(
     "(prefers-color-scheme: light)"
@@ -88,7 +88,7 @@ export default function App() {
           label="Enter title"
           variant="outlined"
           onChange={(event) => {
-            dispatch(setTopicTitle(event?.target.value));
+            dispatch(setTopicTitle(event.target.value));
           }}
         />
       </Box>

@@ -29,6 +29,7 @@ export default function MenuButtonAddPdf({ ...props }) {
       insertDocs({
         url: `http://localhost:8080/api/v1/files/pdf/get/${unique_id}`,
         editor: editor,
+        name: file.name,
       });
     });
   }
