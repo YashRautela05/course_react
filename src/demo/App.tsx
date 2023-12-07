@@ -52,7 +52,7 @@ export default function App() {
         elevation={0}
         sx={{
           background: "#fff",
-          borderBottom: "2px solid rgba(226, 232, 240, 1)",
+          borderBottom: "2px solid rgba(226, 232, 241, 1)",
         }}
       >
         <Toolbar>
