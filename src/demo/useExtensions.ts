@@ -32,6 +32,8 @@ import { Text } from "@tiptap/extension-text";
 import { TextAlign } from "@tiptap/extension-text-align";
 import { TextStyle } from "@tiptap/extension-text-style";
 import { Underline } from "@tiptap/extension-underline";
+import Youtube from "@tiptap/extension-youtube";
+
 import { useMemo } from "react";
 import {
   FontSize,
@@ -41,7 +43,6 @@ import {
   TableImproved,
 } from "../";
 import { mentionSuggestionOptions } from "./mentionSuggestionOptions";
-
 export type UseExtensionsOptions = {
   /** Placeholder hint to show in the text input area before a user types a message. */
   placeholder?: string;
@@ -180,6 +181,9 @@ export default function useExtensions({
         placeholder,
       }),
 
+      Youtube.configure({
+        controls: true,
+      }),
       // We use the regular `History` (undo/redo) extension when not using
       // collaborative editing
       History,

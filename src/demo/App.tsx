@@ -13,7 +13,6 @@ import {
 import { useCallback, useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setTopicTitle } from "../state/courseSlice/setTopicDetailsSlice";
-import type { AppDispatch } from "../state/store";
 import Editor from "./Editor";
 
 export default function App() {
@@ -92,7 +91,7 @@ export default function App() {
           }}
         />
       </Box>
-      <Box sx={{ p: 3, maxWidth: 1250, margin: "0 auto" }}>
+      <Box sx={{ p: 3, maxWidth: 1275, margin: "0 auto" }}>
         <Editor />
       </Box>
     </ThemeProvider>

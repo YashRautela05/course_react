@@ -33,6 +33,7 @@ import {
   isTouchDevice,
 } from "../";
 import MenuButtonAddPdf from "../controls/MenuButtonDocUpload";
+import MenuButtonEmbedYoutubeVideos from "../controls/MenuButtonEmbedYoutubeVideos";
 import { useUploadImagesMutation } from "../state/api/uploadFileApiSlice";
 
 export default function EditorMenuControls() {
@@ -167,6 +168,7 @@ export default function EditorMenuControls() {
       />
 
       <MenuButtonAddPdf></MenuButtonAddPdf>
+      <MenuButtonEmbedYoutubeVideos />
 
       <MenuDivider />
 
