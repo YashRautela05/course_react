@@ -3,11 +3,13 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit/";
 export type userAuthType = {
   token: string;
   email: string;
+  refresh_token: string;
 };
 
 let initialState: userAuthType = {
   email: "",
   token: "",
+  refresh_token: "",
 };
 
 export const userAuthDetailsSlice = createSlice({

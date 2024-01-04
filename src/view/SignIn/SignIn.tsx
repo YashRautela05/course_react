@@ -42,17 +42,19 @@ export default function SignIn() {
   };
 
   function handleSubmit() {
-    let data: signInPostType = { email: email, password: password };
+    let data: signInPostType = { username: email, password: password };
     signInRedux(data)
       .unwrap()
       .then((fullfilled) => {
-        console.log(fullfilled.token);
+        console.log(fullfilled.access_token);
 
         let authDetail: userAuthType = {
           email: email,
-          token: fullfilled.token,
+          token: fullfilled.access_token,
+          refresh_token: fullfilled.refresh_token, // Add refresh_token property
         };
         dispatch(setUserAuthDetails(authDetail));
+
         localStorage.setItem("authDetails", JSON.stringify(authDetail));
 
         navigate("/", { replace: true });

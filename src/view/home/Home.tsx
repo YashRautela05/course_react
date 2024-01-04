@@ -8,7 +8,9 @@ import { default as SearchSvg } from "../../assets/svg/search.svg";
 import { AppDispatch } from "../../state/store";
 import Body from "./components/Body";
 
+import { ThemeProvider } from "@emotion/react";
 import { useEffect } from "react";
+import { lightTheme } from "../../example/src/Themes/LightTheme";
 import { useGetCoursesQuery } from "../../state/api/courseApiSlice";
 function Home() {
   const navigate = useNavigate();
@@ -30,69 +32,63 @@ function Home() {
   return (
     <>
       {/* <CssBaseline /> */}
-      {console.log(getCourses)}
-      <AppBar
-        position="static"
-        elevation={0}
-        sx={{
-          background: "#fff",
-          borderBottom: "2px solid rgba(226, 232, 240, 1)",
-        }}
-      >
-        <Toolbar>
-          <Typography
-            variant="h5"
-            component="div"
-            style={{
-              flexGrow: 1,
-              color: "#121729",
-              fontFamily: "Roboto",
-              fontWeight: "bold",
-            }}
-          >
-            Hashnode
-          </Typography>
-          <Grid
-            justifyContent={"end"}
-            spacing={0.8}
-            marginRight={"3rem"}
-            container
-          >
-            <Grid item>
-              <IconButton sx={{}}>
-                <img src={SearchSvg}></img>
-              </IconButton>
-            </Grid>
+      <ThemeProvider theme={lightTheme}>
+        <AppBar position="static" elevation={0}>
+          <Toolbar>
+            <Typography
+              variant="h5"
+              component="div"
+              style={{
+                flexGrow: 1,
+                color: "#121729",
+                fontFamily: "Roboto",
+                fontWeight: "bold",
+              }}
+            >
+              Hashnode
+            </Typography>
+            <Grid
+              justifyContent={"end"}
+              spacing={0.8}
+              marginRight={"3rem"}
+              container
+            >
+              <Grid item>
+                <IconButton>
+                  <img src={SearchSvg}></img>
+                </IconButton>
+              </Grid>
 
-            <Grid item>
-              <Button
-                disableElevation
-                variant="contained"
-                disableRipple
-                sx={{ textTransform: "none", borderRadius: "0.3rem" }}
-                onClick={() => {
-                  navigate("/my-courses");
-                }}
-              >
-                My Courses
-              </Button>
-            </Grid>
+              <Grid item>
+                <Button
+                  disableElevation
+                  variant="contained"
+                  disableRipple
+                  sx={{ textTransform: "none", borderRadius: "0.3rem" }}
+                  onClick={() => {
+                    navigate("/my-courses");
+                  }}
+                >
+                  My Courses
+                </Button>
+              </Grid>
 
-            <Grid item>
-              <IconButton sx={{}}>
-                <img src={MoonSvg} />
-              </IconButton>
-            </Grid>
+              <Grid item>
+                <IconButton sx={{}}>
+                  <img src={MoonSvg} />
+                </IconButton>
+              </Grid>
 
-            <Grid item>
-              <IconButton sx={{}}>
-                <img src={BellSvg}></img>
-              </IconButton>
+              <Grid item>
+                <IconButton sx={{}}>
+                  <img src={BellSvg}></img>
+                </IconButton>
+              </Grid>
             </Grid>
-          </Grid>
-        </Toolbar>
-      </AppBar>
-      <Body></Body>
+          </Toolbar>
+        </AppBar>
+        <Body></Body>
+      </ThemeProvider>
     </>
   );
 }

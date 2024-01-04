@@ -12,9 +12,9 @@ import {
 } from "@mui/material";
 import { useCallback, useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
+import { lightTheme } from "../example/src/Themes/LightTheme";
 import { setTopicTitle } from "../state/courseSlice/setTopicDetailsSlice";
 import Editor from "./Editor";
-
 export default function App() {
   const dispatch = useDispatch();
 
@@ -35,7 +35,7 @@ export default function App() {
         palette: {
           mode: paletteMode,
           secondary: {
-            main: "#42B81A",
+            main: "#fff",
           },
         },
       }),
@@ -43,7 +43,7 @@ export default function App() {
   );
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={lightTheme}>
       <CssBaseline />
 
       <AppBar
