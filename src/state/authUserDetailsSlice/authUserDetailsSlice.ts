@@ -28,6 +28,12 @@ export const userAuthDetailsSlice = createSlice({
         token: action.payload,
       };
     },
+    setUserRefreshToken: (state, action: PayloadAction<string>) => {
+      return {
+        ...state,
+        token: action.payload,
+      };
+    },
   },
 });
 
