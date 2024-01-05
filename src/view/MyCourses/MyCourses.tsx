@@ -84,7 +84,6 @@ export default function ClippedDrawer() {
             <List>
               {}
               {isSuccess ? (
-                (console.log(userCourses),
                 userCourses.map((courses: CourseGetState, index: number) => (
                   <ListItem
                     sx={{ borderRadius: "1rem" }}
@@ -110,7 +109,7 @@ export default function ClippedDrawer() {
                       </Typography>
                     </ListItemButton>
                   </ListItem>
-                )))
+                ))
               ) : (
                 <></>
               )}

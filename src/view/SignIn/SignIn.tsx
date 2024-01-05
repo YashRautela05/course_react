@@ -46,21 +46,18 @@ export default function SignIn() {
     signInRedux(data)
       .unwrap()
       .then((fullfilled) => {
-        console.log(fullfilled.access_token);
-
         let authDetail: userAuthType = {
           email: email,
           token: fullfilled.access_token,
           refresh_token: fullfilled.refresh_token, // Add refresh_token property
         };
         dispatch(setUserAuthDetails(authDetail));
-
+        console.log(authDetail);
         localStorage.setItem("authDetails", JSON.stringify(authDetail));
 
         navigate("/", { replace: true });
       })
       .catch((rejected) => {
-        console.log(rejected);
         setSnackBarState(true);
       });
   }

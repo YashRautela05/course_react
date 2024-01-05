@@ -17,15 +17,13 @@ export default function MenuButtonAddPdf({ ...props }) {
   const [uploadImages, {}] = useUploadImagesMutation();
   async function handlePdfUploadAsync(files: File[], editor: Editor) {
     files.map(async (file: File) => {
-      console.log(file.name, file.type);
       const unique_id = uuid();
       const modifiedFile = new File([file], unique_id, { type: file.type });
 
       await uploadImages(modifiedFile)
         .unwrap()
-        .then((fullfilled) => console.log("filled"));
+        .then((fullfilled) => {});
 
-      console.log("Hitting pdf");
       insertDocs({
         url: `http://localhost:8080/api/v1/files/pdf/get/${unique_id}`,
         editor: editor,

@@ -1,8 +1,19 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
+import { prepareHeaders } from "../authUserDetailsSlice/authUserDetailsSlice";
 
 export const uploadFileSlice = createApi({
   reducerPath: "uploadFiles",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8080/api/v1/files" }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: "http://localhost:8080/api/v1/files",
+    prepareHeaders: (headers, {}) => {
+      try {
+        return prepareHeaders(headers);
+      } catch (error) {
+        throw error;
+      }
+    },
+  }),
+
   endpoints: (builder) => ({
     uploadImages: builder.mutation({
       query: (file: File) => {

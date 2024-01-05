@@ -33,7 +33,6 @@ let TopicPaneScreen = () => {
       >
         {isLoading ? <p>Loading</p> : <></>}
         {isSuccess ? (
-          (console.log(getTopics),
           getTopics.map((topics: TopicsState, index: number) => {
             return (
               <BlogCard
@@ -46,7 +45,7 @@ let TopicPaneScreen = () => {
                 courseId={topics.courseId}
               ></BlogCard>
             );
-          }))
+          })
         ) : (
           <></>
         )}

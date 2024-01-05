@@ -7,20 +7,21 @@ import TextField from "@mui/material/TextField";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { CourseState, postCourse } from "../../state/courseSlice/courseSlice";
-import { AppDispatch, RootState } from "../../state/store";
+import {
+  CoursePostState,
+  usePostCoursesMutation,
+} from "../../state/api/courseApiSlice";
+import { userAuthType } from "../../state/authUserDetailsSlice/authUserDetailsSlice";
+import { RootState } from "../../state/store";
 function CreateCourse() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const course = useSelector((state: RootState) => state.course);
-
-  const dispatch = useDispatch<AppDispatch>();
+  const [postCourse, response] = usePostCoursesMutation();
   const navigate = useNavigate();
-  useEffect(() => {
-    console.log(course);
-  }, [course]);
+  useEffect(() => {}, [course]);
   return (
     <>
       <CssBaseline> </CssBaseline>
@@ -56,7 +57,6 @@ function CreateCourse() {
             label="Enter Course title"
             value={title}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              console.log(event.target.value);
               setTitle(event.target.value);
             }}
             variant="outlined"
@@ -68,8 +68,6 @@ function CreateCourse() {
             id="outlined-basic"
             value={description}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              console.log(event.target.value);
-
               setDescription(event.target.value);
             }}
             rows={20}
@@ -81,13 +79,16 @@ function CreateCourse() {
             color="primary"
             aria-label="add"
             onClick={() => {
-              let data: CourseState = {
+              let userAuthDetails = JSON.parse(
+                localStorage.getItem("authDetails") ?? "[]"
+              ) as userAuthType;
+              let data: CoursePostState = {
                 courseTitle: title,
                 courseDescription: description,
+                email: userAuthDetails.email,
               };
 
-              dispatch(postCourse(data) as any);
-              console.log("Hitting");
+              postCourse(data);
               navigate(-1);
             }}
           >

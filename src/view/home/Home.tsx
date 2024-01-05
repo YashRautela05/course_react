@@ -19,7 +19,8 @@ function Home() {
     if (localStorage.getItem("authDetails") === null) {
       navigate("/sign-in");
     }
-  });
+  }),
+    [];
 
   const dispatch = useDispatch<AppDispatch>();
   const {

@@ -1,5 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { userAuthType } from "../authUserDetailsSlice/authUserDetailsSlice";
+import {
+  prepareHeaders,
+  userAuthType,
+} from "../authUserDetailsSlice/authUserDetailsSlice";
 
 export const BASE_URL: string = "http://localhost:8080/api/v1/course";
 
@@ -8,14 +11,21 @@ export const userCourseApiSlice = createApi({
 
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
-    prepareHeaders: (headers, { getState }) => {
-      let authDetail = JSON.parse(
-        localStorage.getItem("authDetails") || "[]"
-      ) as userAuthType;
+    // prepareHeaders: (headers, { getState }) => {
+    //   let authDetail = JSON.parse(
+    //     localStorage.getItem("authDetails") || "[]"
+    //   ) as userAuthType;
 
-      headers.set("Authorization", `Bearer ${authDetail.token}`);
+    //   headers.set("Authorization", `Bearer ${authDetail.token}`);
 
-      return headers;
+    //   return headers;
+    // },
+    prepareHeaders: (headers, {}) => {
+      try {
+        return prepareHeaders(headers);
+      } catch (error) {
+        throw error;
+      }
     },
   }),
   endpoints: (builder) => ({
@@ -24,7 +34,6 @@ export const userCourseApiSlice = createApi({
         let authDetail = JSON.parse(
           localStorage.getItem("authDetails") || "[]"
         ) as userAuthType;
-        console.log(`email is ${authDetail.email}`);
         return {
           method: "GET",
           url: `/user-courses/${authDetail.email}`,

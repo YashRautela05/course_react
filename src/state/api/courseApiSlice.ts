@@ -1,7 +1,12 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { prepareHeaders } from "../authUserDetailsSlice/authUserDetailsSlice";
+export interface CoursePostState {
+  courseTitle: string;
+  courseDescription: string;
+  email: string;
+}
 
 export const BASE_URL: string = "http://localhost:8080/api/v1/course";
-
 export type CourseGetState = {
   id: string;
   courseTitle: string;
@@ -12,7 +17,25 @@ export type CourseGetState = {
 export const apiSlice = createApi({
   reducerPath: "api",
 
-  baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: BASE_URL,
+    // prepareHeaders: (headers, { getState }) => {
+    //   let authDetail = JSON.parse(
+    //     localStorage.getItem("authDetails") || "[]"
+    //   ) as userAuthType;
+    //   console.log(`email is ${authDetail.token}`);
+    //   headers.set("Authorization", `Bearer ${authDetail.token}`);
+
+    //   return headers;
+    // },
+    prepareHeaders: (headers) => {
+      try {
+        return prepareHeaders(headers);
+      } catch (error) {
+        throw error;
+      }
+    },
+  }),
 
   tagTypes: ["courses"],
   endpoints: (builder) => ({
@@ -21,7 +44,7 @@ export const apiSlice = createApi({
     }),
 
     postCourses: builder.mutation({
-      query: (course: CourseGetState) => ({
+      query: (course: CoursePostState) => ({
         url: "/save-course",
         method: "POST",
         body: course,

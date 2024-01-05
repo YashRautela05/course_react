@@ -4,16 +4,12 @@ import {
   createSlice,
 } from "@reduxjs/toolkit/";
 import axios from "axios";
-import { userAuthType } from "../authUserDetailsSlice/authUserDetailsSlice";
+import { CoursePostState } from "../api/courseApiSlice";
 
-export interface CourseState {
-  courseTitle: string;
-  courseDescription: string;
-}
-
-const initialState: CourseState = {
+const initialState: CoursePostState = {
   courseTitle: "dummy",
   courseDescription: "dummyDesc",
+  email: "dummyEmail",
 };
 
 const BASE_URL: string = "http://localhost:8080/api/v1/course";
@@ -24,50 +20,38 @@ export const fetchCourse = createAsyncThunk("course/getCourse", async () => {
     baseURL: BASE_URL,
     url: "/allcourses",
   });
-  console.log(response.data);
   return response.data;
 });
-export const postCourse = createAsyncThunk(
-  "course/postCourse",
-  async (data: CourseState) => {
-    let userAuthDetails = JSON.parse(
-      localStorage.getItem("authDetails") ?? "[]"
-    ) as userAuthType;
-    const response = await axios({
-      method: "post",
-      baseURL: BASE_URL,
+// export const postCourse = createAsyncThunk(
+//   "course/postCourse",
+//   async (data: CourseState) => {
+//     let userAuthDetails = JSON.parse(
+//       localStorage.getItem("authDetails") ?? "[]"
+//     ) as userAuthType;
+//     const response = await axios({
+//       method: "post",
+//       baseURL: BASE_URL,
 
-      url: "/save-course",
-      data: {
-        courseTitle: data.courseTitle,
-        description: data.courseDescription,
-        email: userAuthDetails.email,
-      },
-    });
-    console.log(response.data);
-    return response.data;
-  }
-);
+//       url: "/save-course",
+//       data: {
+//         courseTitle: data.courseTitle,
+//         description: data.courseDescription,
+//         email: userAuthDetails.email,
+//       },
+//     });
+//     return response.data;
+//   }
+// );
 const courseSlice = createSlice({
   name: "Course",
   initialState: initialState,
   reducers: {
-    setCourseData: (state, actions: PayloadAction<CourseState>) => {
+    setCourseData: (state, actions: PayloadAction<CoursePostState>) => {
       return {
         ...state,
         ...actions,
       };
     },
-  },
-  extraReducers: (builder) => {
-    builder
-      .addCase(postCourse.pending, (state) => {})
-      .addCase(postCourse.fulfilled, (state, action) => {
-        console.log("Fullfileed");
-      })
-      .addCase(fetchCourse.fulfilled, (state, action) => {
-        console.log(state);
-      });
   },
 });
 export const { setCourseData } = courseSlice.actions;
