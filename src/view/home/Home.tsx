@@ -9,18 +9,17 @@ import { AppDispatch } from "../../state/store";
 import Body from "./components/Body";
 
 import { ThemeProvider } from "@emotion/react";
-import { useEffect } from "react";
 import { lightTheme } from "../../example/src/Themes/LightTheme";
 import { useGetCoursesQuery } from "../../state/api/courseApiSlice";
 function Home() {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (localStorage.getItem("authDetails") === null) {
-      navigate("/sign-in");
-    }
-  }),
-    [];
+  // useEffect(() => {
+  //   if (localStorage.getItem("authDetails") === null) {
+  //     navigate("/sign-in");
+  //   }
+  // }),
+  //   [];
 
   const dispatch = useDispatch<AppDispatch>();
   const {

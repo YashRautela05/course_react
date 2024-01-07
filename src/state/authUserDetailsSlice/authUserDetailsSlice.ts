@@ -46,6 +46,7 @@ export const prepareHeaders = async (headers: Headers) => {
       }
     } else {
       // Access token is expired and refresh token is also expired, throw an error
+      localStorage.removeItem("authDetails");
       throw new Error("Access token and refresh token expired");
     }
   }
