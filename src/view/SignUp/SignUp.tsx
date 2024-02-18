@@ -1,5 +1,7 @@
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import {
+  Alert,
+  AlertTitle,
   Avatar,
   Box,
   Button,
@@ -7,20 +9,70 @@ import {
   CssBaseline,
   Grid,
   Link,
+  Snackbar,
   TextField,
   ThemeProvider,
   Typography,
   createTheme,
 } from "@mui/material";
-import { FormEvent } from "react";
+import { FormEvent, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import {
+  signUpPostType,
+  useSignUpMutation,
+} from "../../state/api/authApiSlice";
 
 export default function SignUp() {
-  // TODO remove, this demo shouldn't need to reset the theme.
   const defaultTheme = createTheme();
   const navigate = useNavigate();
+
+  const [signUp, { isLoading, isError, error }] = useSignUpMutation();
+  const usernameRef = useRef<HTMLInputElement>();
+  const passwordRef = useRef<HTMLInputElement>();
+  const emailRef = useRef<HTMLInputElement>();
+  const firstNameRef = useRef<HTMLInputElement>();
+  const lastNameRef = useRef<HTMLInputElement>();
+
+  const [showUserCreatedSnackBar, setShowUserSnackBar] = useState(false);
+  const [showErrorOccuredWhenCreatingUserSnackBar, setShowUserErrorSnackBar] =
+    useState(false);
+
+  const handleUserCreatedClose = () => {
+    setShowUserSnackBar(false);
+  };
+
+  const handleUserErrorClose = () => {
+    setShowUserErrorSnackBar(false);
+  };
+
   function handleSubmit(event: FormEvent<HTMLFormElement>): void {
-    throw new Error("Function not implemented.");
+    event.preventDefault();
+
+    const username = usernameRef.current!.value;
+
+    const password = passwordRef.current!.value;
+    const email = emailRef.current!.value;
+    const firstName = firstNameRef.current!.value;
+    const lastName = lastNameRef.current!.value;
+
+    let data: signUpPostType = {
+      userName: username,
+      password: password,
+      email: email,
+      firstName: firstName,
+      lastName: lastName,
+    };
+
+    signUp(data)
+      .unwrap()
+      .then((fullfilled: any) => {
+        console.log("ello" + fullfilled);
+        setShowUserSnackBar(true);
+      })
+      .catch((rejected) => {
+        console.log(rejected);
+        setShowUserErrorSnackBar(true);
+      });
   }
 
   return (
@@ -57,6 +109,7 @@ export default function SignUp() {
                   id="firstName"
                   label="First Name"
                   autoFocus
+                  inputRef={firstNameRef}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -67,6 +120,7 @@ export default function SignUp() {
                   label="Last Name"
                   name="lastName"
                   autoComplete="family-name"
+                  inputRef={lastNameRef}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -77,6 +131,19 @@ export default function SignUp() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  inputRef={emailRef}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="username"
+                  label="Username"
+                  name="text"
+                  autoComplete="text"
+                  inputRef={usernameRef}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -88,6 +155,7 @@ export default function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  inputRef={passwordRef}
                 />
               </Grid>
               <Grid item xs={12}></Grid>
@@ -110,6 +178,46 @@ export default function SignUp() {
           </Box>
         </Box>
       </Container>
+      {showUserCreatedSnackBar ? (
+        <Snackbar
+          sx={{ width: "22rem" }}
+          open={true}
+          autoHideDuration={6000}
+          onClose={handleUserCreatedClose}
+        >
+          <Alert
+            onClose={handleUserCreatedClose}
+            sx={{ width: "22rem" }}
+            severity="success"
+            variant="filled"
+          >
+            <AlertTitle>User Created</AlertTitle>
+            <strong>User has been Succesfully created</strong>
+          </Alert>
+        </Snackbar>
+      ) : (
+        <></>
+      )}
+      {/* {showErrorOccuredWhenCreatingUserSnackBar ? (
+        <Snackbar
+          sx={{ width: "22rem" }}
+          open={true}
+          autoHideDuration={6000}
+          onClose={handleUserErrorClose}
+        >
+          <Alert
+            onClose={handleUserErrorClose}
+            sx={{ width: "22rem" }}
+            severity="error"
+            variant="filled"
+          >
+            <AlertTitle>Error</AlertTitle>
+            <strong>Some error Occured</strong>
+          </Alert>
+        </Snackbar>
+      ) : (
+        <></>
+      )} */}
     </ThemeProvider>
   );
 }

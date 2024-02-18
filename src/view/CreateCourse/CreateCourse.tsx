@@ -68,6 +68,7 @@ function CreateCourse() {
             id="outlined-basic"
             value={description}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              console.log(event.target.value);
               setDescription(event.target.value);
             }}
             rows={20}
@@ -84,10 +85,10 @@ function CreateCourse() {
               ) as userAuthType;
               let data: CoursePostState = {
                 courseTitle: title,
-                courseDescription: description,
+                description: description,
                 email: userAuthDetails.email,
               };
-
+              console.log(data);
               postCourse(data);
               navigate(-1);
             }}

@@ -148,7 +148,6 @@ export default function SignIn() {
                 severity="error"
                 variant="filled"
               >
-                {" "}
                 <AlertTitle>Error</AlertTitle>
                 <strong>Bad Credentials </strong>
               </Alert>

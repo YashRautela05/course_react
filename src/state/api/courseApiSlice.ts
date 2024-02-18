@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { prepareHeaders } from "../authUserDetailsSlice/authUserDetailsSlice";
 export interface CoursePostState {
   courseTitle: string;
-  courseDescription: string;
+  description: string;
   email: string;
 }
 

@@ -6,9 +6,9 @@ export type signInPostType = {
 };
 
 export type signUpPostType = {
-  username: string;
-  firstname: string;
-  lastname: string;
+  userName: string;
+  firstName: string;
+  lastName: string;
   email: string;
   password: string;
 };

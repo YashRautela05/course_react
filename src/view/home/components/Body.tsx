@@ -52,6 +52,7 @@ export default function Body() {
             <></>
           )}
           {isSuccess ? (
+            (console.log(getCourses.content),
             getCourses.content.map((course: CourseGetState, index: number) => {
               return (
                 <Card
@@ -63,7 +64,7 @@ export default function Body() {
                   createdAt={`${course.createdAt}`}
                 ></Card>
               );
-            })
+            }))
           ) : (
             <div></div>
           )}

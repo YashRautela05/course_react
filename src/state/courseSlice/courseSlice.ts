@@ -8,7 +8,7 @@ import { CoursePostState } from "../api/courseApiSlice";
 
 const initialState: CoursePostState = {
   courseTitle: "dummy",
-  courseDescription: "dummyDesc",
+  description: "dummyDesc",
   email: "dummyEmail",
 };
 
