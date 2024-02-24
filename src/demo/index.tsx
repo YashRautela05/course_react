@@ -5,7 +5,13 @@ import "@fontsource/roboto/700.css";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter,
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+} from "react-router-dom";
 import { store } from "../state/store";
 import Blog from "../view/Blog/Blog";
 import CreateCourse from "../view/CreateCourse/CreateCourse";
@@ -14,19 +20,60 @@ import SignIn from "../view/SignIn/SignIn";
 import SignUp from "../view/SignUp/SignUp";
 import Home from "../view/home/Home";
 import App from "./App";
-// import "./index.css";
+import "./index.css";
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+
 const container = document.getElementById("root")!;
+
+function TokenChecker({ children }: { children: JSX.Element }) {
+  const location = useLocation();
+  const token = localStorage.getItem("authDetails");
+
+  return token ? (
+    children
+  ) : (
+    <Navigate to="/sign-in" replace state={{ from: location }} />
+  );
+}
+
 createRoot(container).render(
   <StrictMode>
     <Provider store={store}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home></Home>}></Route>
-          <Route path="/editor" element={<App></App>}></Route>
-          <Route path="/my-courses" element={<MyCourses></MyCourses>}></Route>
-          <Route path="/blog/:courseId" element={<Blog></Blog>}></Route>
+          <Route
+            path="/"
+            element={
+              <TokenChecker>
+                <Home></Home>
+              </TokenChecker>
+            }
+          ></Route>
+          <Route
+            path="/editor"
+            element={
+              <TokenChecker>
+                <App></App>
+              </TokenChecker>
+            }
+          ></Route>
+          <Route
+            path="/my-courses"
+            element={
+              <TokenChecker>
+                <MyCourses></MyCourses>
+              </TokenChecker>
+            }
+          ></Route>
+          <Route
+            path="/blog/:courseId"
+            element={
+              <TokenChecker>
+                <Blog></Blog>
+              </TokenChecker>
+            }
+          ></Route>
           <Route path="/sign-in" element={<SignIn></SignIn>}></Route>
           <Route path="/sign-up" element={<SignUp></SignUp>}></Route>
           <Route

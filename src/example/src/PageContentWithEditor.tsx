@@ -203,7 +203,6 @@ export default function PageContentWithEditor() {
 
       <Button
         onClick={() => {
-          console.log(rteRef.current?.editor?.getHTML());
           setHtmlResult(rteRef.current?.editor?.getHTML() ?? "");
         }}
       >

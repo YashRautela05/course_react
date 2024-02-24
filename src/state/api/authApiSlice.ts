@@ -1,13 +1,14 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export type signInPostType = {
-  email: string;
+  username: string;
   password: string;
 };
 
 export type signUpPostType = {
-  firstname: string;
-  lastname: string;
+  userName: string;
+  firstName: string;
+  lastName: string;
   email: string;
   password: string;
 };
@@ -15,13 +16,13 @@ export type signUpPostType = {
 export const auth = createApi({
   reducerPath: "auth",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:8080/api/v1/auth",
+    baseUrl: "http://localhost:8080/users",
   }),
   endpoints: (builder) => ({
     signIn: builder.mutation({
       query: (body: signInPostType) => ({
         method: "POST",
-        url: "/authenticate",
+        url: "/login",
         body: body,
       }),
     }),

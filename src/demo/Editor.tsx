@@ -106,7 +106,6 @@ export default function Editor() {
             left: event.clientX,
             top: event.clientY,
           })?.pos;
-          console.log(imageFiles);
           handleNewImageFiles(imageFiles, insertPosition);
 
           // Return true to treat the event as handled. We call preventDefault
@@ -245,8 +244,6 @@ export default function Editor() {
                       blog: rteRef.current?.editor?.getHTML() ?? "",
                       email: authUserDetails.email,
                     };
-
-                    console.log(currentTopic);
 
                     postTopic(currentTopic);
                     navigate(-1);

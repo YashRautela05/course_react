@@ -1,4 +1,6 @@
 import Box from "@mui/material/Box";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   CourseGetState,
   useGetCoursesQuery,
@@ -6,6 +8,7 @@ import {
 import Card from "./Card";
 
 export default function Body() {
+  const navigate = useNavigate();
   const {
     data: getCourses,
     isLoading,
@@ -13,6 +16,12 @@ export default function Body() {
     isError,
     error,
   } = useGetCoursesQuery("TEST");
+
+  useEffect(() => {
+    if (isError) {
+      navigate("/sign-in");
+    }
+  }, [isError, navigate]);
   return (
     <>
       <Box
@@ -43,8 +52,8 @@ export default function Body() {
             <></>
           )}
           {isSuccess ? (
+            (console.log(getCourses.content),
             getCourses.content.map((course: CourseGetState, index: number) => {
-              console.log(index, course);
               return (
                 <Card
                   key={course.id}
@@ -55,7 +64,7 @@ export default function Body() {
                   createdAt={`${course.createdAt}`}
                 ></Card>
               );
-            })
+            }))
           ) : (
             <div></div>
           )}

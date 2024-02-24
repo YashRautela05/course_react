@@ -1,10 +1,7 @@
-import Brightness4Icon from "@mui/icons-material/Brightness4";
-import Brightness7Icon from "@mui/icons-material/Brightness7";
 import {
   AppBar,
   Box,
   CssBaseline,
-  IconButton,
   TextField,
   ThemeProvider,
   Toolbar,
@@ -15,12 +12,11 @@ import {
 } from "@mui/material";
 import { useCallback, useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
+import { lightTheme } from "../example/src/Themes/LightTheme";
 import { setTopicTitle } from "../state/courseSlice/setTopicDetailsSlice";
-import { AppDispatch } from "../state/store";
 import Editor from "./Editor";
-
 export default function App() {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch();
 
   const systemSettingsPrefersDarkMode = useMediaQuery(
     "(prefers-color-scheme: light)"
@@ -39,7 +35,7 @@ export default function App() {
         palette: {
           mode: paletteMode,
           secondary: {
-            main: "#42B81A",
+            main: "#fff",
           },
         },
       }),
@@ -47,22 +43,34 @@ export default function App() {
   );
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={lightTheme}>
       <CssBaseline />
 
-      <AppBar position="static">
+      <AppBar
+        position="static"
+        elevation={0}
+        sx={{
+          background: "#fff",
+          borderBottom: "2px solid rgba(226, 232, 241, 1)",
+        }}
+      >
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            mui-tiptap
+          <Typography
+            variant="h6"
+            component="div"
+            color={"black"}
+            sx={{ flexGrow: 1 }}
+          >
+            Editor
           </Typography>
 
-          <IconButton onClick={togglePaletteMode} color="inherit">
+          {/* <IconButton onClick={togglePaletteMode} color="inherit">
             {theme.palette.mode === "dark" ? (
               <Brightness7Icon />
             ) : (
               <Brightness4Icon />
             )}
-          </IconButton>
+          </IconButton> */}
         </Toolbar>
       </AppBar>
       <Box
@@ -79,11 +87,11 @@ export default function App() {
           label="Enter title"
           variant="outlined"
           onChange={(event) => {
-            dispatch(setTopicTitle(event?.target.value));
+            dispatch(setTopicTitle(event.target.value));
           }}
         />
       </Box>
-      <Box sx={{ p: 3, maxWidth: 1207, margin: "0 auto" }}>
+      <Box sx={{ p: 3, maxWidth: 1275, margin: "0 auto" }}>
         <Editor />
       </Box>
     </ThemeProvider>

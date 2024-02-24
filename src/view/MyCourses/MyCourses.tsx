@@ -84,7 +84,6 @@ export default function ClippedDrawer() {
             <List>
               {}
               {isSuccess ? (
-                (console.log(userCourses),
                 userCourses.map((courses: CourseGetState, index: number) => (
                   <ListItem
                     sx={{ borderRadius: "1rem" }}
@@ -110,7 +109,7 @@ export default function ClippedDrawer() {
                       </Typography>
                     </ListItemButton>
                   </ListItem>
-                )))
+                ))
               ) : (
                 <></>
               )}
@@ -124,9 +123,13 @@ export default function ClippedDrawer() {
             width={"100%"}
             display={"flex"}
             alignItems={"center"}
-            justifyItems={"center"}
+            justifyContent={"center"}
           >
-            <Typography>HI</Typography>
+            <Box width={"15rem"}>
+              <Typography textAlign={"center"} component={"div"} variant="h6">
+                Your Topics Will be displayed here
+              </Typography>
+            </Box>
           </Box>
         )}
       </Box>
